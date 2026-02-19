@@ -39,7 +39,7 @@ The goal was to design a dashboard that supports **strategic decision-making** i
 - **Power BI Desktop**
 - **Power Query (M)**
 - **DAX**
-- **Microsoft Excel (simulated dataset)**
+- **Microsoft Excel**
 
 ---
 
@@ -56,11 +56,10 @@ The goal was to design a dashboard that supports **strategic decision-making** i
 
 The following transformations were performed in Power Query:
 
-- Split ingredient column into rows
-- Trimmed and cleaned ingredient text
 - Removed duplicate records
-- Created `Dim_Ingredient` from distinct ingredient list
-- Created `Dim_Pizza` using Pizza Name
+- Created `Dim_Ingredient` by splitting ingredient column into rows, trimmed and cleaned to retrieve distinct ingredient list
+- Created `Dim_Pizza` contains distinct Pizza Name
+- Created `Dim_PizzaIngredient` connected to both `Dim_Ingredient` and `Dim_Pizza`
 - Generated Date and Time dimension tables
 - Created calculated columns:
   - `Order DateTime`
@@ -68,19 +67,19 @@ The following transformations were performed in Power Query:
   - `Minutes Between Orders (Day Only)`
   - `SizeSort`
 
-No preprocessing was performed outside Power BI.
-
 ---
 
 ## 🏗️ Data Modeling
 
-The final model follows a structured dimensional approach.
+Below is the star schema model used in this project:
+![Data Model](/images/data_model.png)
+
 
 ### Fact Table
 
 **Fact**
 - One row per pizza per order
-- Contains quantity, price, revenue, order ID, and date/time attributes
+- Contains quantity, size, price, order ID, pizza ID, pizza name, category, ingredients and date/time attributes
 
 ### Dimension Tables
 
@@ -107,59 +106,81 @@ This ensures proper ingredient-level filtering while maintaining model integrity
 
 ## 📈 Analysis & Visualisation
 
-The dashboard consists of multiple analytical views:
+The Power BI dashboard consists of multiple visual elements to display insights:
 
-### 1️⃣ Executive Overview
+### 🏠 Overview Page
 
-- **Total Revenue:** $817.86K  
-- **Total Orders:** 21,350  
-- **Total Quantity Sold:** 49.57K  
-- **Average Order Value:** $38.31  
-- **Multi-item Orders:** 62%  
-- **Average Minutes Between Orders (Day Only):** 10.9 minutes  
+- **Total Revenue – KPI Card –** Used to display overall revenue performance for 2015.
 
----
+- **Total Quantity – KPI Card –** Shows total pizzas sold, representing overall demand volume.
 
-### 2️⃣ Sales Trends
+- **Total Orders – KPI Card –** Indicates transaction volume and business activity level.
 
-- Strongest Month: **July**
-- Strongest Day of Week: **Friday**
-- Peak Hours: **12:00–13:59 (Lunch peak)**
-- Identified seasonal and intra-day demand patterns
+- **Average Order Value – KPI Card –** Measures revenue efficiency per order.
 
----
+- **Average Pizza per Order – KPI Card –** Identifies purchasing behaviour (single vs bundled purchases).
 
-### 3️⃣ Product Performance
+- **Average Minutes Between Orders – KPI Card –** Shows operational order cadence (day-only logic to exclude overnight gaps).
 
-- Strongest Category: **Classic**
-- Clear revenue and volume concentration among top 5 pizzas
-- Bottom performers identified for menu optimisation
+- **Total Sales by Category and Size – Clustered Column Chart –** Used to compare revenue contribution across categories and pizza sizes.
 
----
+- **Pizza Categories Ranked by Quantity and Total Sales – Matrix Table –** Displays category ranking by volume and revenue for performance benchmarking.
 
-### 4️⃣ Ingredient Analysis
+- **Order Type Proportion – Pie Chart –** Visualises distribution between single-item and multi-item orders.
 
-- Dominant Ingredients: **Tomatoes, Garlic**
-- Ingredient revenue vs quantity segmentation using quadrant analysis
-- Average reference lines implemented for performance grouping
+- **Total Sales by Month – Line Chart –** Shows monthly revenue trend and seasonality patterns.
+
+- **Category, Month, Weekday, Weekend – Slicers –** Enable interactive filtering for multi-dimensional analysis.
+
+![Overview](/images/overview.png)
 
 ---
 
-### 5️⃣ Pricing & Demand Correlation
+### 📊 Sales Trend Page
 
-- Correlation between Average Pizza Price and Total Quantity: **-0.95**
-- Indicates strong inverse relationship
-- Suggests price elasticity at category level
+- **Total Sales by Month – Line Chart –** Identifies seasonal revenue fluctuations.
+
+- **Total Sales by Weekday Name – Clustered Column Chart –** Compares weekday performance to determine strongest trading days.
+
+- **Total Sales by Week Number – Line Chart –** Detects short-term trends and anomalies throughout the year.
+
+- **Total Sales by Day – Line Chart –** Enables daily-level anomaly detection.
+
+- **Total Sales by Hour – Column Chart –** Identifies intra-day peak demand periods (e.g., lunch and dinner peaks).
+
+![Sales Trend](/images/sales_trend.png)
 
 ---
 
-### 6️⃣ Order Behaviour
+### 🍕 Product Performance Page
 
-- 62% of orders contain multiple pizzas
-- Demand clustering during peak hours
-- Average 10.9 minutes between orders (excluding overnight gaps)
+- **Most Popular Pizza by Quantity – Bar Chart –** Highlights top-selling pizzas by volume.
 
-This metric was calculated using day-only logic to avoid inflation from non-operating hours.
+- **Most Popular Pizza by Revenue – Bar Chart –** Identifies highest revenue-generating pizzas.
+
+- **Least Popular Pizza by Quantity – Bar Chart –** Detects low-volume products for potential optimisation.
+
+- **Least Popular Pizza by Revenue – Bar Chart –** Highlights low-revenue SKUs for pricing or menu review.
+
+- **Category Slicer – Interactive Filter –** Allows segmentation of product performance by category.
+
+![Product Performance](/images/product_performance.png)
+
+---
+
+### 🧄 Ingredients Analysis Page
+
+- **Average Pizza Price vs Total Quantity by Category – Scatter Plot with Trend Line –** Used to analyse price-volume relationship and calculate correlation (-0.95).
+
+- **Most Popular Ingredients – Horizontal Bar Chart –** Identifies top-demand ingredients by quantity.
+
+- **Total Quantity and Total Revenue by Ingredients – Scatter Plot with Average Reference Lines –** Segments ingredients into performance quadrants (High/Low Quantity vs High/Low Revenue).
+
+- **Least Popular Ingredients – Horizontal Bar Chart –** Detects low-impact ingredients for inventory or cost review.
+
+- **Category Slicer – Interactive Filter –** Enables ingredient performance analysis by category.
+
+![Ingredients Analysis](/images/ingredients_analysis.png)
 
 ---
 
