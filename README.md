@@ -20,6 +20,14 @@ This project demonstrates:
 
 ---
 
+## 🌐 Live Dashboard
+
+You can explore the interactive Power BI dashboard here:
+
+🔗 **[View Live Dashboard on Power BI Service](https://app.powerbi.com/links/ndF8bMa2y3?ctid=6a425d0d-58f2-4e36-8689-10002b2ec567&pbi_source=linkShare)**
+
+---
+
 ## 🎯 Problem Statement
 
 The business needs to understand:
@@ -247,9 +255,9 @@ The dashboard is designed for interactive exploration to support strategic and o
 
 ## 📎 Repository Contents
 
-- `Pizza Sales_Dashboard.pbix`
-- Supporting documentation
-- `README.md`
+- `Pizza Sales_Dashboard.pbix` – Power BI source file
+- `README.md` – Project documentation
+- Power BI Service Live Link – Interactive dashboard
 
 ---
 
